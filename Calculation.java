@@ -47,5 +47,20 @@ public class Calculation{
         array[1] = ( (4 * a * c) - (b * b) ) / (4 * a);
         return array;
     }
+
+    public static double axisOfSymetry(double a, double b){
+        return -b / (2 * a);
+    }
     
+    public static double functionX(double a, double b, double c, double x){
+        double fx = 0.0;
+
+        // x = axisOfSymetry(a, b);
+
+        // fx = Math.pow((x * a), 2) + (b * x) + c;
+
+        fx = ( (4 * a * c) - (b * b) ) / (4 * a);
+        
+        return fx;
+    }
 }

@@ -14,6 +14,7 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -34,6 +35,9 @@ public class App extends Application {
     private Label lbRootX1Result, lbRootX2Result, lbRootDiscriminantDResult;
     private Button btCalculate;
     private static Calculation calculate;
+
+    NumberAxis xAxis = new NumberAxis();
+    NumberAxis yAxis = new NumberAxis();
 
     public void start(Stage stage) {
 
@@ -58,16 +62,27 @@ public class App extends Application {
         lbRootX2 = new Label("x2:");
         lbRootX2Result = new Label();
 
-        NumberAxis xAxis = new NumberAxis();
-        NumberAxis yAxis = new NumberAxis();
+        // NumberAxis xAxis = new NumberAxis();
+        // NumberAxis yAxis = new NumberAxis();
+       
+        xAxis.setAutoRanging(false);
+        yAxis.setAutoRanging(false);
+
+        xAxis.setLowerBound(-25);
+        xAxis.setUpperBound(25);
+        yAxis.setLowerBound(-25);
+        yAxis.setUpperBound(25);
 
         LineChart lineChart = new LineChart(xAxis, yAxis);
         // lineChart.setHorizontalZeroLineVisible(true);
         // lineChart.setVerticalZeroLineVisible(true);
-        // lineChart.setCreateSymbols(false);
+        lineChart.setCreateSymbols(false);
         lineChart.setLegendVisible(false);
         XYChart.Series series1 = new XYChart.Series();
         lineChart.getData().addAll(series1);
+
+        Scroll scroll = new Scroll();
+        lineChart.addEventFilter(ScrollEvent.ANY, scroll.onScrollEventHandler);
 
 
         EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() {
@@ -82,11 +97,42 @@ public class App extends Application {
                     series1.getData().clear();
                     double arrayVertex[] = new double[2];
                     arrayVertex = Calculation.vertexXY(parameterA, parameterB, parameterC);
-                    series1.getData().add(new XYChart.Data(arrayVertex[0], arrayVertex[1]));
 
-                    for(double i = -100.0; i < 100.0; i = i + 0.1){
-                        series1.getData().add(new XYChart.Data(arrayVertex[0] + i, i *i));
+                    // double x = 0.0;
+                    // double y = 0.0;
+                    // arrayVertex[0] = x;
+                    // arrayVertex[1] = y;
+                    // double x = calculate.axisOfSymetry(parameterA, parameterB);
+                    // double y = calculate.functionX(parameterA, parameterB, parameterC, calculate.axisOfSymetry(parameterA, parameterB));
+
+                    // series1.getData().add(new XYChart.Data(calculate.axisOfSymetry(parameterA, parameterB), calculate.functionX(parameterA, parameterB, parameterC, calculate.axisOfSymetry(parameterA, parameterB))));
+
+                    // series1.getData().add(new XYChart.Data(calculate.axisOfSymetry(parameterA, parameterB), calculate.axisYCoord(parameterA, parameterB, parameterC)));
+                    // System.out.print("X: " + calculate.axisOfSymetry(parameterA, parameterB) + "Y: " + calculate.functionX(parameterA, parameterB, parameterC, calculate.axisOfSymetry(parameterA, parameterB)));
+                    
+
+                    // series1.getData().add(new XYChart.Data(x, y));
+
+                    for(double i = -100.0; i <= 100.0; i = i + 0.1D){
+                        double x = calculate.axisOfSymetry(parameterA, parameterB);
+                        double y = (parameterC - ((parameterB * parameterB) / (4 * parameterA)));
+
+                        double nasobok = (parameterA * Math.pow(i, 2));
+
+                        series1.getData().add(new XYChart.Data(i + x, nasobok + y));
                     }
+
+                    // for(int i = 0; i < 10; i++){
+                    //     x = x + 2;
+                    //     y = Calculation.functionX(parameterA, parameterB, parameterC, x);
+                    //     series1.getData().add(new XYChart.Data(-x, y));
+                    //     series1.getData().add(new XYChart.Data(x, y));
+                    // }
+
+
+                    // for(double i = -100.0; i < 100.0; i = i + 0.1){
+                    //     series1.getData().add(new XYChart.Data(arrayVertex[0] + i, i *i));
+                    // }
     
                     Double x1 = calculate.calculationPlus(parameterA, parameterB, parameterC);
                     Double x2 = calculate.calculationMinus(parameterA, parameterB, parameterC);
@@ -200,9 +246,26 @@ public class App extends Application {
         stage.setScene(scene);
         stage.setResizable(true);
         stage.show();
-    }
 
-    
+
+    }
+    class Scroll{
+        public EventHandler<ScrollEvent> onScrollEventHandler = new EventHandler<ScrollEvent>() {
+            public void handle(ScrollEvent event){
+                double zoom = 1.1;
+                double delta_y = event.getDeltaY();
+
+                if(delta_y > 0){
+                    zoom = 2.0 - zoom;
+                }
+
+                xAxis.setLowerBound(xAxis.getLowerBound() * zoom);
+                xAxis.setUpperBound(xAxis.getUpperBound() * zoom);
+                yAxis.setLowerBound(yAxis.getLowerBound() * zoom);
+                yAxis.setUpperBound(yAxis.getUpperBound() * zoom);
+            }
+        };
+    }
 
     public static void main(String arg[]) {
         Application.launch();
