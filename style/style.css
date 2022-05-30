@@ -1,0 +1,8 @@
+.root{
+    -fx-font-size: 18;
+}
+.vbox{
+    -fx-font-weight: bold;
+    -fx-padding: 10;
+    -fx-margin: 10;
+}
