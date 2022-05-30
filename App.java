@@ -1,3 +1,4 @@
+import java.security.interfaces.DSAPublicKey;
 import java.text.DecimalFormat;
 
 
@@ -98,28 +99,37 @@ public class App extends Application {
                     double arrayVertex[] = new double[2];
                     arrayVertex = Calculation.vertexXY(parameterA, parameterB, parameterC);
 
-                    // double x = 0.0;
-                    // double y = 0.0;
-                    // arrayVertex[0] = x;
-                    // arrayVertex[1] = y;
-                    // double x = calculate.axisOfSymetry(parameterA, parameterB);
-                    // double y = calculate.functionX(parameterA, parameterB, parameterC, calculate.axisOfSymetry(parameterA, parameterB));
+                    double discriminant = calculate.calculationD(parameterA, parameterB, parameterC);
 
-                    // series1.getData().add(new XYChart.Data(calculate.axisOfSymetry(parameterA, parameterB), calculate.functionX(parameterA, parameterB, parameterC, calculate.axisOfSymetry(parameterA, parameterB))));
-
-                    // series1.getData().add(new XYChart.Data(calculate.axisOfSymetry(parameterA, parameterB), calculate.axisYCoord(parameterA, parameterB, parameterC)));
-                    // System.out.print("X: " + calculate.axisOfSymetry(parameterA, parameterB) + "Y: " + calculate.functionX(parameterA, parameterB, parameterC, calculate.axisOfSymetry(parameterA, parameterB)));
-                    
-
-                    // series1.getData().add(new XYChart.Data(x, y));
-
-                    for(double i = -100.0; i <= 100.0; i = i + 0.1D){
-                        double x = calculate.axisOfSymetry(parameterA, parameterB);
-                        double y = (parameterC - ((parameterB * parameterB) / (4 * parameterA)));
-
-                        double nasobok = (parameterA * Math.pow(i, 2));
-
-                        series1.getData().add(new XYChart.Data(i + x, nasobok + y));
+                    if(discriminant < 0){
+                        Alert alert = new Alert(AlertType.WARNING);
+                        alert.setTitle("Discriminant < 0");
+                        alert.setHeaderText("Discriminant < 0");
+                        alert.setContentText("Function graph is in irrational realm.");
+                        alert.show();
+                    }
+                    else{
+                        if(parameterA == 0){
+                            for(double i = -1000; i <= 1000; i++){
+                                if(parameterB == 0){
+                                    series1.getData().add(new XYChart.Data(i, parameterC));
+                                }
+                                else{
+                                    double a = ((-parameterC) / (parameterB));
+                                    series1.getData().add(new XYChart.Data(i + a, i * parameterB));
+                                }
+                            }
+                        }
+                        else{
+                            for(double i = -100.0; i <= 100.0; i = i + 0.1D){
+                                double x = calculate.axisOfSymetry(parameterA, parameterB);
+                                double y = (parameterC - ((parameterB * parameterB) / (4 * parameterA)));
+        
+                                double nasobok = (parameterA * Math.pow(i, 2));
+        
+                                series1.getData().add(new XYChart.Data(i + x, nasobok + y));
+                            }
+                        }
                     }
 
                     // for(int i = 0; i < 10; i++){
@@ -246,7 +256,6 @@ public class App extends Application {
         stage.setScene(scene);
         stage.setResizable(true);
         stage.show();
-
 
     }
     class Scroll{
