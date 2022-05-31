@@ -1,8 +1,74 @@
 .root{
     -fx-font-size: 18;
+    -fx-background-color: #2E8BC0;
+    /* -fx-background-color: linear-gradient(to bottom left, #ff7f50, #6a5acd); */
+    -fx-background-color: radial-gradient(center 50% 50% , radius 200px , #ffebcd, #008080);
+    -fx-background-color: radial-gradient(center 50% 50% , radius 70% , #ffebcd99, #008080);
+
+    -fx-font-family: Lucida Sans Unicode, sans-serif;
 }
 .vbox{
     -fx-font-weight: bold;
     -fx-padding: 10;
     -fx-margin: 10;
+}
+
+.gpane{
+    -fx-background-color: rgba(0, 0, 0, 0.279);
+    -fx-padding: 30;
+    -fx-background-radius: 50;
+    -fx-margin: 10;
+}
+
+.lbAppTitle, .lbEquationDisplay, .lbParameterA, .lbParameterB, .lbParameterC, .lbDiscriminantD, .lbDiscriminantDResult, .lbRootX1, .lbRootX2, .lbRootX1Result, .lbRootX2Result, .lbRootDiscriminantDResult{
+    -fx-text-fill: white;
+    -fx-font-size: 25;
+    -fx-font-family: Arial, sans-serif;
+    
+}
+
+.tfParameterA, .tfParameterB, .tfParameterC{
+    -fx-font-size: 25;
+    /* -fx-font-base-color: */
+}
+
+.lbParameterA, .lbParameterB, .lbParameterC, .lbDiscriminantD, .lbDiscriminantDResult, .lbRootX1, .lbRootX2{
+    /* -fx-font-weight: bold; */
+    -fx-background-color: rgba(0, 0, 0, 0.279);
+    -fx-padding: 10;
+    -fx-background-radius: 50;
+}
+
+.lbAppTitle, .lbEquationDisplay{
+    -fx-background-color: rgba(0, 0, 0, 0.279);
+    -fx-padding: 10;
+    -fx-background-radius: 50;
+}
+
+.default-color0.chart-series-line {
+    -fx-stroke: #008080;
+    /* -fx-stroke: white; */
+}
+
+.btCalculate{
+    -fx-font-size: 25;
+    -fx-text-fill: white;
+
+    -fx-background-color: rgba(0, 0, 0, 0.279);
+    -fx-padding: 10;
+    -fx-background-radius: 50;
+
+}
+
+/* .chart-plot-background{
+    -fx-background-color: rgba(0, 0, 0, 0.279);
+    -fx-padding: 10;
+    -fx-background-radius: 50;
+    -fx-background-color: transparent;
+} */
+
+.linechart{
+    -fx-background-color: rgba(0, 0, 0, 0.279);
+    -fx-padding: 30;
+    -fx-background-radius: 50;
 }
