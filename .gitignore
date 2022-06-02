@@ -14,3 +14,11 @@
 /Graph.class
 /Graph.java
 /todo
+
+*.class
+/*.class
+./*.class
+./.todo.txt
+/.todo.txt
+/media/sketch.png
+./media/sketch.png
